@@ -1,0 +1,29 @@
+{
+  "name": "tusimo/wechat-for-component",
+  "description": "微信第三方开放平台",
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/tusimo/wechat-for-component"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "overtrue/wechat": "~3.0"
+  },
+  "authors": [
+    {
+      "name": "tusimo",
+      "email": "ucc862@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Tusimo\\Wechat\\": "src/"
+    }
+  },
+  "config": {
+    "vendor-dir": "vendor"
+  }
+}

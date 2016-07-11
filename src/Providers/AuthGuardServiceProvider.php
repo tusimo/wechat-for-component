@@ -3,7 +3,6 @@
 namespace Tusimo\Wechat\Providers;
 
 use EasyWeChat\Encryption\Encryptor;
-use EasyWeChat\Server\Guard;
 use EasyWeChat\Support\Log;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -33,7 +32,6 @@ class AuthGuardServiceProvider implements ServiceProviderInterface
                 $pimple['config']['component_aes_key']
             );
         };
-
         $pimple['component'] = function($pimple) {
             return new Component(
                 $pimple['config']['component_app_id'],
@@ -47,7 +45,7 @@ class AuthGuardServiceProvider implements ServiceProviderInterface
 
             $server->debug($pimple['config']['debug']);
 
-            $server->setEncryptor($pimple[' encryptor']);
+            $server->setEncryptor($pimple['encryptor']);
             
             $server->setMessageHandler(function($message) use ($pimple){
                 switch ($message->infoType) {

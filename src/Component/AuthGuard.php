@@ -13,6 +13,7 @@ namespace Tusimo\Wechat\Component;
 use EasyWeChat\Core\Exceptions\FaultException;
 use EasyWeChat\Core\Exceptions\InvalidArgumentException;
 use EasyWeChat\Core\Exceptions\RuntimeException;
+use EasyWeChat\Encryption\Encryptor;
 use EasyWeChat\Server\BadRequestException;
 use EasyWeChat\Support\Collection;
 use EasyWeChat\Support\Log;
@@ -31,6 +32,7 @@ class AuthGuard
     const AUTHORIZED = 4;
     const UNAUTHORIZED = 8;
     const UPDATEAUTHIRIZED = 16;
+    const ALL_MSG = 1048830;
 
     /**
      * @var Request
@@ -180,7 +182,7 @@ class AuthGuard
      *
      * @param Encryptor $encryptor
      *
-     * @return Guard
+     * @return $this
      */
     public function setEncryptor(Encryptor $encryptor)
     {

@@ -10,6 +10,7 @@ namespace Tusimo\Wechat\Component;
 
 
 use Doctrine\Common\Cache\Cache;
+use EasyWeChat\Support\Log;
 
 class AuthorizerAccessToken
 {
@@ -62,7 +63,7 @@ class AuthorizerAccessToken
     public function getToken()
     {
         $cacheKey = sprintf($this->cacheKey, $this->authorizerAppId);
-        $this->token = $this->getCache()->fetch($cacheKey);
+        $this->token = FALSE;//$this->getCache()->fetch($cacheKey);
         if (!$this->token) {
             $params = array(
                 'component_appid'          => $this->componentAppId,
@@ -70,7 +71,8 @@ class AuthorizerAccessToken
                 'authorizer_refresh_token' => $this->authorizerRefreshToken,
             );
             $http = new ComponentHttp(new ComponentAccessToken($this->componentAppId, $this->componentAppSecret,$this->cache));
-            $response = $http->post(self::API_AUTHORIZER_TOKEN, $params);
+            $response = $http->json(self::API_AUTHORIZER_TOKEN, $params);
+			Log::record(is_array($response) ? json_encode($response) : $response);
             // 设置token
             $token = $response['authorizer_access_token'];
             // 把token缓存起来
@@ -79,6 +81,10 @@ class AuthorizerAccessToken
         }
         return $this->token;
     }
+	
+	public function getQueryName(){
+		return 'access_token';
+	}
 
     /**
      * 将token信息保存到缓存里

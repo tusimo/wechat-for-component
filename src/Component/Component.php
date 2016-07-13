@@ -80,7 +80,7 @@ class Component
     public function createPreAuthCode($identification)
     {
         $cacheKey = sprintf($this->preAuthCodeCacheKey, $identification);
-        $preAuthCode = $this->getCache()->fetch($cacheKey);
+        $preAuthCode = FALSE;//$this->getCache()->fetch($cacheKey);
         if (!$preAuthCode) {
             $response = $this->http->post(self::API_CREATE_PREAUTHCODE, [
                 'component_appid' => $this->componentAppId,
@@ -115,7 +115,7 @@ class Component
             'component_appid'    => $this->componentAppId,
             'authorization_code' => $authorizationCode,
         );
-        return $this->http->post(self::API_QUERY_AUTH, $params);
+        return $this->http->json(self::API_QUERY_AUTH, $params);
     }
 
     /**
@@ -130,7 +130,7 @@ class Component
             'component_appid'  => $this->componentAppId,
             'authorizer_appid' => $authorizerAppid,
         );
-        return $this->http->post(self::API_GET_AUTHORIZER_INFO, $params);
+        return $this->http->json(self::API_GET_AUTHORIZER_INFO, $params);
     }
 
     /**
@@ -147,7 +147,7 @@ class Component
             'authorizer_appid' => $authorizerAppId,
             'option_name'      => $optionName,
         );
-        return $this->http->post(self::API_GET_AUTHORIZER_OPTION, $params);
+        return $this->http->json(self::API_GET_AUTHORIZER_OPTION, $params);
     }
 
     /**
@@ -166,7 +166,7 @@ class Component
             'option_name'      => $optionName,
             'option_value'     => $optionValue,
         );
-        return $this->http->post(self::API_SET_AUTHORIZER_OPTION, $params);
+        return $this->http->json(self::API_SET_AUTHORIZER_OPTION, $params);
     }
 
     /**

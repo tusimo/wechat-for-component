@@ -42,7 +42,7 @@ class Application extends \EasyWeChat\Foundation\Application
     }
 
     private function getAuthorizerRefreshToken($authorizerAppId){
-        if (!$refreshToken =$this['cache']->fetch('wechat.authorizer_refresh_token'.$this->setAuthorizerAppId($authorizerAppId))){
+        if (!$refreshToken =$this['cache']->fetch('wechat.authorizer_refresh_token.'.$authorizerAppId)){
             return new Exception('未获取到refreshtoken,请重新授权');
         }
         return $refreshToken;

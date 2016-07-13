@@ -64,9 +64,9 @@ class AuthGuard
      */
     protected $messageTypeMapping = [
         'component_verify_ticket' => 2,
-        'authoirzed' => 4,
+        'authorized' => 4,
         'unauthorized' => 8,
-        'updateauthoirzed' => 16,
+        'updateauthorized' => 16,
     ];
 
     /**
@@ -259,6 +259,7 @@ class AuthGuard
         Log::debug('Message detail:', $message);
 
         $message = new Collection($message);
+		
 
         $type = $this->messageTypeMapping[$message->get('InfoType')];
 
@@ -311,6 +312,7 @@ class AuthGuard
                 $this->request->get('timestamp'),
                 $content
             );
+
         } else {
             $message = XML::parse($content);
         }

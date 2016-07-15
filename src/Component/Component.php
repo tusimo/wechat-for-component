@@ -185,8 +185,9 @@ class Component
             $this->componentAppSecret,
             $this->cache
         );
+        $authInfoDetails = $this->getAuthorizerInfo($authInfo['authorization_info']['authorizer_appid']);
         $authirizerAccessToken->setToken($authInfo['authorization_info']['authorizer_access_token'],$authInfo['authorization_info']['authorizer_refresh_token']);
-        $callable($authInfo);
+        $callable(array_merge($authInfo,$authInfoDetails));
         return;
     }
 }

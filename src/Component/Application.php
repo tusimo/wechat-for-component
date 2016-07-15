@@ -47,4 +47,15 @@ class Application extends \EasyWeChat\Foundation\Application
         }
         return $refreshToken;
     }
+	
+	public function getComponentAccessToken(){
+        if (!isset($this['component_access_token'])) {
+            $this['component_access_token'] = new ComponentAccessToken(
+                $this['config']['component_app_id'],
+                $this['config']['component_app_secret'],
+                $this['cache']
+            );
+        }
+        return $this['component_access_token']->getToken();
+    }
 }

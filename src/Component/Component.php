@@ -82,7 +82,7 @@ class Component
         $cacheKey = sprintf($this->preAuthCodeCacheKey, $identification);
         $preAuthCode = FALSE;//$this->getCache()->fetch($cacheKey);
         if (!$preAuthCode) {
-            $response = $this->http->post(self::API_CREATE_PREAUTHCODE, [
+            $response = $this->http->json(self::API_CREATE_PREAUTHCODE, [
                 'component_appid' => $this->componentAppId,
             ]);
             $preAuthCode = $response['pre_auth_code'];

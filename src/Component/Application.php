@@ -23,6 +23,9 @@ class Application extends \EasyWeChat\Foundation\Application
         if (isset($config['component_app_id']) && $config['component_app_secret'] && !empty($config['component_app_id']) && !empty($config['component_app_secret'])) {
             //注册auth_guard
             $this->register(new AuthGuardServiceProvider());
+            if (isset($config['app_id'])) {//如果是处理调用授权的逻辑，不能设置这个参数，只有代公众号使用相关功能才能传递这个参数
+                $this->setAuthorizerAppId($config['app_id']);
+            }
         }
     }
 

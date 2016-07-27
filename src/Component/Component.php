@@ -80,7 +80,7 @@ class Component
     public function createPreAuthCode($identification)
     {
         $cacheKey = sprintf($this->preAuthCodeCacheKey, $identification);
-        $preAuthCode = FALSE;//$this->getCache()->fetch($cacheKey);
+        $preAuthCode = $this->getCache()->fetch($cacheKey);
         if (!$preAuthCode) {
             $response = $this->http->json(self::API_CREATE_PREAUTHCODE, [
                 'component_appid' => $this->componentAppId,
@@ -176,7 +176,7 @@ class Component
     public function setAuthCallback(callable $callable){
         $request = Request::createFromGlobals();
         $authInfo = $this->queryAuth($request->get('auth_code'));
-        Log::info('处理授权同步回调'.$request->getContent());
+        Log::debug('处理授权同步回调'.$request->getContent());
         //保存信息
         $authirizerAccessToken = new AuthorizerAccessToken(
             $authInfo['authorization_info']['authorizer_appid'],

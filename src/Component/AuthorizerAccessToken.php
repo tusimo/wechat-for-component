@@ -63,7 +63,7 @@ class AuthorizerAccessToken
     public function getToken()
     {
         $cacheKey = sprintf($this->cacheKey, $this->authorizerAppId);
-        $this->token = FALSE;//$this->getCache()->fetch($cacheKey);
+        $this->token = $this->getCache()->fetch($cacheKey);
         if (!$this->token) {
             $params = array(
                 'component_appid'          => $this->componentAppId,
@@ -72,7 +72,7 @@ class AuthorizerAccessToken
             );
             $http = new ComponentHttp(new ComponentAccessToken($this->componentAppId, $this->componentAppSecret,$this->cache));
             $response = $http->json(self::API_AUTHORIZER_TOKEN, $params);
-			Log::record(is_array($response) ? json_encode($response) : $response);
+			Log::debug(is_array($response) ? json_encode($response) : $response);
             // 设置token
             $token = $response['authorizer_access_token'];
             // 把token缓存起来

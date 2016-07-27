@@ -248,6 +248,14 @@ class AuthGuard
      */
     protected function handleMessage($message)
     {
+        switch ($message->InfoType) {
+            case 'component_verify_ticket' : //发送ticket
+                Log::debug('接收到ticket事件'.$message);
+                $componentVerifyTicket = new ComponentVerifyTicket($this->application['cache']);
+                $componentVerifyTicket->setComponentVerifyTicket($message->ComponentVerifyTicket);
+                break;
+        }
+
         $handler = $this->messageHandler;
 
         if (!is_callable($handler)) {

@@ -26,18 +26,18 @@ class ComponentAccessToken extends AccessToken
     {
         $cacheKey = $this->prefix.$this->appId;
 
-        $cached = FALSE;//$this->getCache()->fetch($cacheKey);
+        $cached = $this->getCache()->fetch($cacheKey);
 
         if ($forceRefresh || empty($cached)) {
             $token = $this->getTokenFromServer();
 
             // XXX: T_T... 7200 - 1500
             $this->getCache()->save($cacheKey, $token[$this->getQueryName()], $token['expires_in'] - 1500);
-			Log::info('服务器获取到component_access_token'.$token[$this->getQueryName()]);
+			Log::debug('服务器获取到component_access_token'.$token[$this->getQueryName()]);
             return $token[$this->getQueryName()];
         }
 		
-		Log::info('缓存获取到component_access_token'.$cached);
+		Log::debug('缓存获取到component_access_token'.$cached);
 
         return $cached;
     }

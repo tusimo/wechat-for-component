@@ -5,6 +5,7 @@
 - 实现了授权流程
 - 实现了授权后代公众号调用流程
 - 由于授权模式和直接开发模式只有获取的`access_token`不一样，其他都是一样的。所以直接替换掉Easy WeChat的token即可使用
+
 |最重要的一点：由于直接使用的Easy WeChat开发 而Easy WeChat将AccessToken限制类型了。所以不能传入AuthorizerAccessToken类的实例，
 |所以要么重写大部分的代码，要么取巧 删除这个类型限制。
 |vendor\overtrue\wechat\src\Core\AbstractAPI 第60行114行的类型限制AccessToken就可以了

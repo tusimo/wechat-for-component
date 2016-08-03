@@ -47,7 +47,12 @@ class AuthGuardServiceProvider implements ServiceProviderInterface
             $server->debug($pimple['config']['debug']);
 
             $server->setEncryptor($pimple['encryptor']);
-            
+            //处理verifyTicket
+            $server->setVerifyTicketHandler(function($message) use ($pimple){
+                Log::info('接收到ticket事件'.$message);
+                $componentVerifyTicket = new ComponentVerifyTicket($pimple['cache']);
+                $componentVerifyTicket->setComponentVerifyTicket($message->ComponentVerifyTicket);
+            });
             return $server;
         };
     }

@@ -54,6 +54,8 @@ class AuthGuard
      */
     protected $messageHandler;
 
+    protected $verifyHandler;
+
     /**
      * @var int
      */
@@ -248,15 +250,8 @@ class AuthGuard
      */
     protected function handleMessage($message)
     {
-        switch ($message->InfoType) {
-            case 'component_verify_ticket' : //发送ticket
-                Log::debug('接收到ticket事件'.$message);
-                $componentVerifyTicket = new ComponentVerifyTicket($this->application['cache']);
-                $componentVerifyTicket->setComponentVerifyTicket($message->ComponentVerifyTicket);
-                break;
-        }
-
         $handler = $this->messageHandler;
+        $verifyHandler = $this->verifyHandler;
 
         if (!is_callable($handler)) {
             Log::debug('No handler enabled.');
@@ -267,7 +262,11 @@ class AuthGuard
         Log::debug('Message detail:', $message);
 
         $message = new Collection($message);
-		
+
+        //处理verifyTicket
+        if ($message->get('InfoType') == 'component_verify_ticket') {
+            call_user_func_array($verifyHandler,[$message]);
+        }
 
         $type = $this->messageTypeMapping[$message->get('InfoType')];
 
@@ -337,4 +336,11 @@ class AuthGuard
     {
         return $this->request->get('encrypt_type') && $this->request->get('encrypt_type') === 'aes';
     }
+
+    public function setVerifyTicketHandler($callable){
+        if (is_callable($callable)) {
+            $this->verifyHandler = $callable;
+        }
+    }
+
 }

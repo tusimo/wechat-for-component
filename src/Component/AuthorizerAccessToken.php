@@ -76,7 +76,7 @@ class AuthorizerAccessToken
             // 设置token
             $token = $response['authorizer_access_token'];
             // 把token缓存起来
-            $this->getCache()->save($cacheKey,$token,$response['expires_in']);
+            $this->setToken($response['authorizer_access_token'],$response['authorizer_refresh_token']);
             return $token;
         }
         return $this->token;
@@ -94,7 +94,7 @@ class AuthorizerAccessToken
      */
     public function setToken($authorizerAccessToken, $authorizerRefreshToken){
         $cacheKey = sprintf($this->cacheKey, $this->authorizerAppId);
-        $this->getCache()->save($cacheKey, $authorizerAccessToken);
+        $this->getCache()->save($cacheKey, $authorizerAccessToken,7000);
         $refreshKey = sprintf($this->refreshKey, $this->authorizerAppId);
         $this->getCache()->save($refreshKey, $authorizerRefreshToken);
         return $this;

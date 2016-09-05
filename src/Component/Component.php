@@ -174,6 +174,7 @@ class Component
      * @param callable $callable
      */
     public function setAuthCallback(callable $callable){
+        $this->forgetPreAuthCode(null);
         $request = Request::createFromGlobals();
         $authInfo = $this->queryAuth($request->get('auth_code'));
         Log::debug('处理授权同步回调'.$request->getContent());

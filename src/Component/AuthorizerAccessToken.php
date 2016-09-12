@@ -72,7 +72,7 @@ class AuthorizerAccessToken
             );
             $http = new ComponentHttp(new ComponentAccessToken($this->componentAppId, $this->componentAppSecret,$this->cache));
             $response = $http->json(self::API_AUTHORIZER_TOKEN, $params);
-			Log::debug(is_array($response) ? json_encode($response) : $response);
+            Log::debug(is_array($response) ? json_encode($response) : $response);
             // 设置token
             $token = $response['authorizer_access_token'];
             // 把token缓存起来
@@ -81,10 +81,16 @@ class AuthorizerAccessToken
         }
         return $this->token;
     }
-	
-	public function getQueryName(){
-		return 'access_token';
-	}
+
+    public function getQueryName(){
+        return 'access_token';
+    }
+
+    public function getAppId()
+    {
+        return $this->authorizerAppId;
+    }
+
 
     /**
      * 将token信息保存到缓存里

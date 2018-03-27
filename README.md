@@ -1,4 +1,5 @@
 # [微信第三方开放平台SDK]
+#注意：本项目已废弃，请直接使用。[http://easywechat.org/](http://easywechat.org/)
 
 本SDK基于 Easy WeChat开发
 
